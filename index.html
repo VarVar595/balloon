@@ -193,11 +193,6 @@
         balloon.style.width = "50px";
         balloon.style.height = "50px";
 
-        // Increment click counter
-        clickCounter++;
-        totalClicks++;
-        updateClickCounter();
-
         // Increment pop counter
         popCounter++;
         updatePopCounter();
@@ -210,10 +205,6 @@
         // Change the background color based on the selected color
         balloon.style.backgroundColor = colorPicker.value;
 
-        // Increment click counter
-        clickCounter++;
-        totalClicks++;
-        updateClickCounter();
     }
 
     function updateClickCounter() {
@@ -224,7 +215,7 @@
 
     function updatePopCounter() {
         var popCounterElement = document.getElementById("popCounter");
-        popCounterElement.innerHTML = "Balloons Popped: " + popCounter;
+        popCounterElement.innerHTML = "Bubbles Popped: " + popCounter;
     }
 
     function updatePixelIncreaseDisplay() {
