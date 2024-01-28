@@ -38,6 +38,11 @@
             bottom: 50px;
             left: 10px;
         }
+        #popCounter {
+            position: fixed;
+            bottom: 70px;
+            left: 10px;
+        }
     </style>
 </head>
 <body>
@@ -46,6 +51,7 @@
 <div id="resetButton" onclick="resetBalloon()">Pop</div>
 <input type="color" id="colorPicker" onchange="changeBalloonColor()" value="#00ff00">
 <div id="clickCounter">Clicks: 0</div>
+<div id="popCounter">Balloons Popped: 0</div>
 
 <audio id="blowSound" src="blow.mp3"></audio>
 <audio id="popSound" src="pop.mp3"></audio>
@@ -54,6 +60,7 @@
 
 <script>
     var clickCounter = 0;
+    var popCounter = 0;
 
     function playBlowSound() {
         var blowSound = document.getElementById("blowSound");
@@ -109,6 +116,8 @@
         // Reset the balloon to its original size
         balloon.style.width = "50px";
         balloon.style.height = "50px";
+        popCounter++;
+        updatepopCounter();
 
         // Increment click counter
 
