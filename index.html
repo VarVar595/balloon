@@ -117,7 +117,7 @@
         balloon.style.width = "50px";
         balloon.style.height = "50px";
         popCounter++;
-        updatepopCounter();
+        updatePopCounter();
 
         // Increment click counter
 
@@ -136,6 +136,10 @@
     function updateClickCounter() {
         var clickCounterElement = document.getElementById("clickCounter");
         clickCounterElement.innerHTML = "Clicks: " + clickCounter;
+    }
+    function updatePopCounter() {
+        var popCounterElement = document.getElementById("popCounter");
+        popCounterElement.innerHTML = "Balloons Popped: " + popCounter;
     }
 </script>
 
