@@ -106,30 +106,9 @@
         balloon.style.backgroundColor = colorPicker.value;
     }
 
-    function checkArrowPattern(direction) {
-        if (direction === "up") {
-            arrowClickCounter++;
-        } else if (direction === "down") {
-            arrowClickCounter--;
-        }
+    
 
-        if (arrowClickCounter === 2) {
-            // If the user clicks up arrow twice, change the shape to a square
-            var balloon = document.getElementById("balloon");
-            balloon.style.borderRadius = "0";
-        } else if (arrowClickCounter === 0) {
-            // If the user clicks down arrow twice, reset the shape to a circle
-            var balloon = document.getElementById("balloon");
-            balloon.style.borderRadius = "50%";
-        }
-    }
-
-    document.addEventListener("keydown", function(event) {
-        // Detect arrow key presses
-        if (event.key === "ArrowUp" || event.key === "ArrowDown") {
-            // Call the resizeBalloon function on arrow key presses
-            resizeBalloon();
-        }
+    
     });
 </script>
 
