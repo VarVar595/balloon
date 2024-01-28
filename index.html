@@ -32,6 +32,12 @@
             left: 10px;
             padding: 10px;
         }
+
+        #clickCounter {
+            position: fixed;
+            bottom: 50px;
+            left: 10px;
+        }
     </style>
 </head>
 <body>
@@ -39,6 +45,7 @@
 <div id="balloon" onclick="resizeBalloon()"></div>
 <div id="resetButton" onclick="resetBalloon()">Pop</div>
 <input type="color" id="colorPicker" onchange="changeBalloonColor()" value="#00ff00">
+<div id="clickCounter">Clicks: 0</div>
 
 <audio id="blowSound" src="blow.mp3"></audio>
 <audio id="popSound" src="pop.mp3"></audio>
@@ -46,6 +53,8 @@
 <audio id="vineSound" src="vine.mp3"></audio>
 
 <script>
+    var clickCounter = 0;
+
     function playBlowSound() {
         var blowSound = document.getElementById("blowSound");
         blowSound.play();
@@ -55,11 +64,12 @@
         var popSound = document.getElementById("popSound");
         popSound.play();
     }
-    
+
     function playYippeeSound() {
         var yippeeSound = document.getElementById("yippeeSound");
         yippeeSound.play();
     }
+
     function playVineSound() {
         var vineSound = document.getElementById("vineSound");
         vineSound.play();
@@ -82,19 +92,26 @@
 
         // Play blowing sound
         playBlowSound();
+
+        // Increment click counter
+        clickCounter++;
+        updateClickCounter();
     }
 
     function resetBalloon() {
-         var balloon = document.getElementById("balloon");
+        var balloon = document.getElementById("balloon");
 
-        // Randomly choose between "yippee" and "pop" sound effects
-        var randomSound = Math.random() < 0.33 ? playPopSound() : 
-                      Math.random() < 0.66 ? playYippeeSound() : 
-                                             playVineSound();
+        // Randomly choose between "pop", "yippee", and "vine" sound effects
+        var randomSound = Math.random() < 0.33 ? playPopSound() :
+                          Math.random() < 0.66 ? playYippeeSound() :
+                                                 playVineSound();
 
         // Reset the balloon to its original size
         balloon.style.width = "50px";
         balloon.style.height = "50px";
+
+        // Increment click counter
+
     }
 
     function changeBalloonColor() {
@@ -103,6 +120,13 @@
 
         // Change the background color based on the selected color
         balloon.style.backgroundColor = colorPicker.value;
+
+        // Increment click counter
+    }
+
+    function updateClickCounter() {
+        var clickCounterElement = document.getElementById("clickCounter");
+        clickCounterElement.innerHTML = "Clicks: " + clickCounter;
     }
 </script>
 
