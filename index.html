@@ -68,8 +68,16 @@
         }
         #mutePopButton {
             position: fixed;
-            top: 50px;
-            left: 10px;
+            top: 10px;
+            left: 50px;
+            padding: 10px;
+            background-color: #ccc;
+            cursor: pointer;
+        }
+        #decreasePixelButton {
+            position: fixed;
+            top: 100px;
+            right: 10px;
             padding: 10px;
             background-color: #ccc;
             cursor: pointer;
@@ -87,6 +95,7 @@
 <div id="storeInfo">Clicks to Spend: <span id="clicksToSpend">0</span></div>
 <div id="muteBlowButton" onclick="toggleMute('blow')">Mute Blow</div>
 <div id="mutePopButton" onclick="toggleMute('pop')">Mute Pop</div>
+<div id="decreasePixelButton" onclick="decreasePixelIncrease()">Decrease Pixel Increase</div>
 
 <audio id="blowSound" src="blow.mp3"></audio>
 <audio id="popSound" src="pop.mp3"></audio>
@@ -201,6 +210,12 @@
         }
     }
 
+    function decreasePixelIncrease() {
+        // Decrease the pixel increase by 5
+        pixelIncrease = Math.max(5, pixelIncrease - 5);
+        updatePixelIncreaseDisplay();
+    }
+
     function updateClicksToSpend() {
         var clicksToSpendElement = document.getElementById("clicksToSpend");
         clicksToSpendElement.innerHTML = clicksToSpend;
@@ -214,8 +229,7 @@
 
     setInterval(function () {
         // Earn one click to spend every 50 clicks
-        clicksToSpend += Math.floor(clickCounter / 50);
-        clickCounter %= 50;
+        clicksToSpend += Math.floor(totalClicks / 50);
         updateClicksToSpend();
     }, 1000);
 </script>
