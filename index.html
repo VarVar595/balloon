@@ -87,7 +87,10 @@
 <body>
 <div id="balloon" onclick="resizeBalloon()"></div>
 <div id="resetButton" onclick="resetBalloon()">Pop</div>
-<input type="color" id="colorPicker" onchange="changeBalloonColor()" value="#00ff00">
+<div id="colorPickerContainer">
+    <span id="colorPickerLabel">Color Picker:</span>
+    <input type="color" id="colorPicker" onchange="changeBalloonColor()" value="#00ff00">
+</div>
 <div id="clickCounter">Clicks: 0</div>
 <div id="popCounter">Balloons Popped: 0</div>
 <div id="pixelIncreaseDisplay">Pixel Increase: 15px</div>
