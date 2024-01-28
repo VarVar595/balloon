@@ -254,6 +254,11 @@
 
     function toggleMute(sound) {
         muteState[sound] = !muteState[sound];
+        var blowMuteStateElement = document.getElementById("blowMuteState");
+        var popMuteStateElement = document.getElementById("popMuteState");
+
+        blowMuteStateElement.textContent = muteState['blow'] ? 'Muted' : 'Unmuted';
+        popMuteStateElement.textContent = muteState['pop'] ? 'Muted' : 'Unmuted';
     }
 </script>
 </body>
