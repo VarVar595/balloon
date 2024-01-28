@@ -42,11 +42,9 @@
 
 <audio id="blowSound" src="blow.mp3"></audio>
 <audio id="popSound" src="pop.mp3"></audio>
-<audio id="yippeeSound" src="yippee.mp3"></audio>
+<audio id="popSound" src="yippee.mp3"></audio>
 
 <script>
-    var arrowClickCounter = 0;
-
     function playBlowSound() {
         var blowSound = document.getElementById("blowSound");
         blowSound.play();
@@ -56,7 +54,7 @@
         var popSound = document.getElementById("popSound");
         popSound.play();
     }
-
+    
     function playYippeeSound() {
         var yippeeSound = document.getElementById("yippeeSound");
         yippeeSound.play();
@@ -79,13 +77,10 @@
 
         // Play blowing sound
         playBlowSound();
-
-        // Check if the arrow pattern matches
-        checkArrowPattern("up");
     }
 
     function resetBalloon() {
-        var balloon = document.getElementById("balloon");
+         var balloon = document.getElementById("balloon");
 
         // Randomly choose between "yippee" and "pop" sound effects
         var randomSound = Math.random() < 0.5 ? playPopSound() : playYippeeSound();
@@ -93,9 +88,6 @@
         // Reset the balloon to its original size
         balloon.style.width = "50px";
         balloon.style.height = "50px";
-
-        // Reset arrow click counter
-        arrowClickCounter = 0;
     }
 
     function changeBalloonColor() {
@@ -105,11 +97,6 @@
         // Change the background color based on the selected color
         balloon.style.backgroundColor = colorPicker.value;
     }
-
-    
-
-    
-    });
 </script>
 
 </body>
