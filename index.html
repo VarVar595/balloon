@@ -40,7 +40,14 @@
             bottom: 70px;
             left: 10px;
         }
-        #muteBlowButton,
+        #muteBlowButton {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            padding: 10px;
+            background-color: #ccc;
+            cursor: pointer;
+        }
         #mutePopButton {
             position: fixed;
             top: 10px;
@@ -113,19 +120,15 @@
     function resetBalloon() {
         var balloon = document.getElementById("balloon");
 
-        // Randomly choose between "pop", "yippee", and "vine" sound effects
-        playBlowSound();
+        
         playPopSound();
-
-        // Reset the balloon to its original size
+        
         balloon.style.width = "50px";
         balloon.style.height = "50px";
 
-        // Increment click counter
         clickCounter++;
         updateClickCounter();
 
-        // Increment pop counter
         popCounter++;
         updatePopCounter();
     }
@@ -134,10 +137,8 @@
         var balloon = document.getElementById("balloon");
         var colorPicker = document.getElementById("colorPicker");
 
-        // Change the background color based on the selected color
         balloon.style.backgroundColor = colorPicker.value;
 
-        // Increment click counter
         clickCounter++;
         updateClickCounter();
     }
