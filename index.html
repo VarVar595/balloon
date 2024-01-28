@@ -42,8 +42,11 @@
 
 <audio id="blowSound" src="blow.mp3"></audio>
 <audio id="popSound" src="pop.mp3"></audio>
+<audio id="yippeeSound" src="yippee.mp3"></audio>
 
 <script>
+    var arrowClickCounter = 0;
+
     function playBlowSound() {
         var blowSound = document.getElementById("blowSound");
         blowSound.play();
@@ -52,6 +55,11 @@
     function playPopSound() {
         var popSound = document.getElementById("popSound");
         popSound.play();
+    }
+
+    function playYippeeSound() {
+        var yippeeSound = document.getElementById("yippeeSound");
+        yippeeSound.play();
     }
 
     function resizeBalloon() {
@@ -71,17 +79,23 @@
 
         // Play blowing sound
         playBlowSound();
+
+        // Check if the arrow pattern matches
+        checkArrowPattern("up");
     }
 
     function resetBalloon() {
         var balloon = document.getElementById("balloon");
 
+        // Randomly choose between "yippee" and "pop" sound effects
+        var randomSound = Math.random() < 0.5 ? playPopSound() : playYippeeSound();
+
         // Reset the balloon to its original size
         balloon.style.width = "50px";
         balloon.style.height = "50px";
 
-        // Play pop sound
-        playPopSound();
+        // Reset arrow click counter
+        arrowClickCounter = 0;
     }
 
     function changeBalloonColor() {
@@ -91,6 +105,32 @@
         // Change the background color based on the selected color
         balloon.style.backgroundColor = colorPicker.value;
     }
+
+    function checkArrowPattern(direction) {
+        if (direction === "up") {
+            arrowClickCounter++;
+        } else if (direction === "down") {
+            arrowClickCounter--;
+        }
+
+        if (arrowClickCounter === 2) {
+            // If the user clicks up arrow twice, change the shape to a square
+            var balloon = document.getElementById("balloon");
+            balloon.style.borderRadius = "0";
+        } else if (arrowClickCounter === 0) {
+            // If the user clicks down arrow twice, reset the shape to a circle
+            var balloon = document.getElementById("balloon");
+            balloon.style.borderRadius = "50%";
+        }
+    }
+
+    document.addEventListener("keydown", function(event) {
+        // Detect arrow key presses
+        if (event.key === "ArrowUp" || event.key === "ArrowDown") {
+            // Call the resizeBalloon function on arrow key presses
+            resizeBalloon();
+        }
+    });
 </script>
 
 </body>
