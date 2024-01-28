@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resizable Balloon</title>
+    <style>
+        #balloon {
+            width: 50px;
+            height: 50px;
+            background-color: blue;
+            border-radius: 50%;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.3s ease-in-out;
+        }
+
+        #resetButton {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            padding: 10px;
+            background-color: #ccc;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div id="balloon" onclick="resizeBalloon()"></div>
+<div id="resetButton" onclick="resetBalloon()">Pop</div>
+
+<audio id="blowSound" src="file:///Users/varunkedia/Downloads/blow.mp3"></audio>
+<audio id="popSound" src="file:///Users/varunkedia/Downloads/pop.mp3"></audio>
+
+<script>
+    function playBlowSound() {
+        var blowSound = document.getElementById("blowSound");
+        blowSound.play();
+    }
+
+    function playPopSound() {
+        var popSound = document.getElementById("popSound");
+        popSound.play();
+    }
+
+    function resizeBalloon() {
+        var balloon = document.getElementById("balloon");
+
+        // Get the current width and height
+        var currentWidth = balloon.offsetWidth;
+        var currentHeight = balloon.offsetHeight;
+
+        // Increase the width and height by a factor (e.g., 20 pixels)
+        var newWidth = currentWidth + 10;
+        var newHeight = currentHeight + 10;
+
+        // Apply the new width and height
+        balloon.style.width = newWidth + "px";
+        balloon.style.height = newHeight + "px";
+
+        // Play blowing sound
+        playBlowSound();
+    }
+
+    function resetBalloon() {
+        var balloon = document.getElementById("balloon");
+
+        // Reset the balloon to its original size
+        balloon.style.width = "50px";
+        balloon.style.height = "50px";
+
+        // Play pop sound
+        playPopSound();
+    }
+</script>
+
+</body>
+</html>
