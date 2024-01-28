@@ -72,16 +72,6 @@
         popSound.play();
     }
 
-    function playYippeeSound() {
-        var yippeeSound = document.getElementById("yippeeSound");
-        yippeeSound.play();
-    }
-
-    function playVineSound() {
-        var vineSound = document.getElementById("vineSound");
-        vineSound.play();
-    }
-
     function resizeBalloon() {
         var balloon = document.getElementById("balloon");
 
@@ -112,9 +102,7 @@
         var balloon = document.getElementById("balloon");
 
         // Randomly choose between "pop", "yippee", and "vine" sound effects
-        var randomSound = Math.random() < 0.33 ? playPopSound() :
-                          Math.random() < 0.66 ? playYippeeSound() :
-                                                 playVineSound();
+        playBlowSound();
 
         // Reset the balloon to its original size
         balloon.style.width = "50px";
