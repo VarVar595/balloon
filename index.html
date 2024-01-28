@@ -103,6 +103,9 @@
         // Increment click counter
         clickCounter++;
         updateClickCounter();
+        if (newWidth >= 1010 && newHeight >= 1010) {
+            resetBalloon();
+        }
     }
 
     function resetBalloon() {
