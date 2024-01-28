@@ -63,7 +63,7 @@
         }
         #storeInfo {
             position: fixed;
-            top: 40px;
+            top: 50px;
             right: 10px;
         }
         #muteBlowButton {
@@ -76,16 +76,16 @@
         }
         #mutePopButton {
             position: fixed;
-            top: 10px;
-            right: 10px;
+            top: 50px;
+            left: 10px;
             padding: 10px;
             background-color: #ccc;
             cursor: pointer;
         }
         #decreasePixelButton {
             position: fixed;
-            bottom: 10px;
-            left: 10px;
+            top: 10px;
+            right: 100px;
             padding: 10px;
             background-color: #ccc;
             cursor: pointer;
@@ -194,28 +194,13 @@
         // Increment click counter
         clickCounter++;
         totalClicks++;
-
-        // Increment pop counter
-        popCounter++;
-        updatePopCounter();
-    }
-
-    function changeBalloonColor() {
-        var balloon = document.getElementById("balloon");
-        var colorPicker = document.getElementById("colorPicker");
-
-        // Change the background color based on the selected color
-        balloon.style.backgroundColor = colorPicker.value;
-
-        // Increment click counter
-        clickCounter++;
-        totalClicks++;
         updateClickCounter();
     }
 
     function updateClickCounter() {
         var clickCounterElement = document.getElementById("clickCounter");
         clickCounterElement.innerHTML = "Clicks: " + clickCounter;
+        checkClicksToSpend();
     }
 
     function updatePopCounter() {
@@ -243,6 +228,13 @@
             pixelIncrease = 0;
         }
         updatePixelIncreaseDisplay();
+    }
+
+    function checkClicksToSpend() {
+        if (totalClicks % 50 === 0) {
+            clicksToSpend++;
+            updateClicksToSpend();
+        }
     }
 
     function updateClicksToSpend() {
