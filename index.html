@@ -88,7 +88,9 @@
          var balloon = document.getElementById("balloon");
 
         // Randomly choose between "yippee" and "pop" sound effects
-        var randomSound = Math.random() < 0.5 ? playPopSound() : playYippeeSound() : playVineSound();
+        var randomSound = Math.random() < 0.33 ? playPopSound() : 
+                      Math.random() < 0.66 ? playYippeeSound() : 
+                                             playVineSound();
 
         // Reset the balloon to its original size
         balloon.style.width = "50px";
