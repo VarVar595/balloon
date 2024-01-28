@@ -40,6 +40,15 @@
             bottom: 70px;
             left: 10px;
         }
+        #muteBlowButton,
+        #mutePopButton {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            padding: 10px;
+            background-color: #ccc;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -48,39 +57,59 @@
 <input type="color" id="colorPicker" onchange="changeBalloonColor()" value="#00ff00">
 <div id="clickCounter">Clicks: 0</div>
 <div id="popCounter">Balloons Popped: 0</div>
+<div id="muteBlowButton" onclick="toggleMute('blow')">Mute Blow</div>
+<div id="mutePopButton" onclick="toggleMute('pop')">Mute Pop</div>
 <audio id="blowSound" src="blow.mp3"></audio>
 <audio id="popSound" src="pop.mp3"></audio>
 <script>
     var clickCounter = 0;
     var popCounter = 0;
+    var muteState = {
+        blow: false,
+        pop: false
+    };
+
     function playBlowSound() {
         var blowSound = document.getElementById("blowSound");
-        blowSound.play();
+        if (!muteState.blow) {
+            blowSound.play();
+        }
     }
+
     function playPopSound() {
         var popSound = document.getElementById("popSound");
-        popSound.play();
+        if (!muteState.pop) {
+            popSound.play();
+        }
     }
+
     function resizeBalloon() {
         var balloon = document.getElementById("balloon");
+
         // Get the current width and height
         var currentWidth = balloon.offsetWidth;
         var currentHeight = balloon.offsetHeight;
+
         // Increase the width and height by a factor (e.g., 20 pixels)
         var newWidth = currentWidth + 15;
         var newHeight = currentHeight + 15;
+
         // Apply the new width and height
         balloon.style.width = newWidth + "px";
         balloon.style.height = newHeight + "px";
+
         // Play blowing sound
         playBlowSound();
+
         // Increment click counter
         clickCounter++;
         updateClickCounter();
+
         if (newWidth >= 800 && newHeight >= 800) {
             resetBalloon();
         }
     }
+
     function resetBalloon() {
         var balloon = document.getElementById("balloon");
 
@@ -91,24 +120,42 @@
         // Reset the balloon to its original size
         balloon.style.width = "50px";
         balloon.style.height = "50px";
+
+        // Increment click counter
+        clickCounter++;
+        updateClickCounter();
+
+        // Increment pop counter
         popCounter++;
         updatePopCounter();
-        // Increment click counter
     }
+
     function changeBalloonColor() {
         var balloon = document.getElementById("balloon");
         var colorPicker = document.getElementById("colorPicker");
+
         // Change the background color based on the selected color
         balloon.style.backgroundColor = colorPicker.value;
+
         // Increment click counter
+        clickCounter++;
+        updateClickCounter();
     }
+
     function updateClickCounter() {
         var clickCounterElement = document.getElementById("clickCounter");
         clickCounterElement.innerHTML = "Clicks: " + clickCounter;
     }
+
     function updatePopCounter() {
         var popCounterElement = document.getElementById("popCounter");
         popCounterElement.innerHTML = "Balloons Popped: " + popCounter;
+    }
+
+    function toggleMute(soundType) {
+        muteState[soundType] = !muteState[soundType];
+        var muteButton = document.getElementById(`mute${soundType.charAt(0).toUpperCase() + soundType.slice(1)}Button`);
+        muteButton.innerHTML = muteState[soundType] ? `Unmute ${soundType.charAt(0).toUpperCase() + soundType.slice(1)}` : `Mute ${soundType.charAt(0).toUpperCase() + soundType.slice(1)}`;
     }
 </script>
 </body>
