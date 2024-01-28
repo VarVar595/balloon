@@ -25,12 +25,20 @@
             background-color: #ccc;
             cursor: pointer;
         }
+
+        #colorPicker {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            padding: 10px;
+        }
     </style>
 </head>
 <body>
 
 <div id="balloon" onclick="resizeBalloon()"></div>
 <div id="resetButton" onclick="resetBalloon()">Pop</div>
+<input type="color" id="colorPicker" onchange="changeBalloonColor()" value="#00ff00">
 
 <audio id="blowSound" src="blow.mp3"></audio>
 <audio id="popSound" src="pop.mp3"></audio>
@@ -74,6 +82,14 @@
 
         // Play pop sound
         playPopSound();
+    }
+
+    function changeBalloonColor() {
+        var balloon = document.getElementById("balloon");
+        var colorPicker = document.getElementById("colorPicker");
+
+        // Change the background color based on the selected color
+        balloon.style.backgroundColor = colorPicker.value;
     }
 </script>
 
