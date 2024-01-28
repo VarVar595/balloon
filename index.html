@@ -55,7 +55,7 @@
         }
         #storeInfo {
             position: fixed;
-            top: 40px;
+            top: 50px;
             right: 10px;
         }
         #muteBlowButton {
@@ -215,6 +215,7 @@
     setInterval(function () {
         // Earn one click to spend every 50 clicks
         clicksToSpend += Math.floor(clickCounter / 50);
+        clickCounter %= 50;
         updateClicksToSpend();
     }, 1000);
 </script>
