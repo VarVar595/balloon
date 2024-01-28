@@ -40,21 +40,23 @@
             bottom: 70px;
             left: 10px;
         }
-        #muteBlowButton {
+        #pixelIncreaseDisplay {
             position: fixed;
-            top: 10px;
+            bottom: 90px;
             left: 10px;
-            padding: 10px;
-            background-color: #ccc;
-            cursor: pointer;
         }
-        #mutePopButton {
+        #storeButton {
             position: fixed;
             top: 10px;
             right: 10px;
             padding: 10px;
             background-color: #ccc;
             cursor: pointer;
+        }
+        #storeInfo {
+            position: fixed;
+            top: 40px;
+            right: 10px;
         }
     </style>
 </head>
@@ -64,30 +66,27 @@
 <input type="color" id="colorPicker" onchange="changeBalloonColor()" value="#00ff00">
 <div id="clickCounter">Clicks: 0</div>
 <div id="popCounter">Balloons Popped: 0</div>
-<div id="muteBlowButton" onclick="toggleMute('blow')">Mute Blow</div>
-<div id="mutePopButton" onclick="toggleMute('pop')">Mute Pop</div>
+<div id="pixelIncreaseDisplay">Pixel Increase: 15px</div>
+<div id="storeButton" onclick="buyPixelIncrease()">Buy Pixel Increase</div>
+<div id="storeInfo">Clicks to Spend: <span id="clicksToSpend">0</span></div>
+
 <audio id="blowSound" src="blow.mp3"></audio>
 <audio id="popSound" src="pop.mp3"></audio>
 <script>
     var clickCounter = 0;
     var popCounter = 0;
-    var muteState = {
-        blow: false,
-        pop: false
-    };
+    var pixelIncrease = 15;
+    var totalClicks = 0;
+    var clicksToSpend = 0;
 
     function playBlowSound() {
         var blowSound = document.getElementById("blowSound");
-        if (!muteState.blow) {
-            blowSound.play();
-        }
+        blowSound.play();
     }
 
     function playPopSound() {
         var popSound = document.getElementById("popSound");
-        if (!muteState.pop) {
-            popSound.play();
-        }
+        popSound.play();
     }
 
     function resizeBalloon() {
@@ -97,9 +96,9 @@
         var currentWidth = balloon.offsetWidth;
         var currentHeight = balloon.offsetHeight;
 
-        // Increase the width and height by a factor (e.g., 20 pixels)
-        var newWidth = currentWidth + 15;
-        var newHeight = currentHeight + 15;
+        // Increase the width and height by the pixelIncrease
+        var newWidth = currentWidth + pixelIncrease;
+        var newHeight = currentHeight + pixelIncrease;
 
         // Apply the new width and height
         balloon.style.width = newWidth + "px";
@@ -110,7 +109,9 @@
 
         // Increment click counter
         clickCounter++;
+        totalClicks++;
         updateClickCounter();
+        updatePixelIncreaseDisplay();
 
         if (newWidth >= 800 && newHeight >= 800) {
             resetBalloon();
@@ -120,15 +121,19 @@
     function resetBalloon() {
         var balloon = document.getElementById("balloon");
 
-        
+        // Randomly choose between "pop", "yippee", and "vine" sound effects
         playPopSound();
-        
+
+        // Reset the balloon to its original size
         balloon.style.width = "50px";
         balloon.style.height = "50px";
 
+        // Increment click counter
         clickCounter++;
+        totalClicks++;
         updateClickCounter();
 
+        // Increment pop counter
         popCounter++;
         updatePopCounter();
     }
@@ -137,9 +142,12 @@
         var balloon = document.getElementById("balloon");
         var colorPicker = document.getElementById("colorPicker");
 
+        // Change the background color based on the selected color
         balloon.style.backgroundColor = colorPicker.value;
 
+        // Increment click counter
         clickCounter++;
+        totalClicks++;
         updateClickCounter();
     }
 
@@ -153,11 +161,31 @@
         popCounterElement.innerHTML = "Balloons Popped: " + popCounter;
     }
 
-    function toggleMute(soundType) {
-        muteState[soundType] = !muteState[soundType];
-        var muteButton = document.getElementById(`mute${soundType.charAt(0).toUpperCase() + soundType.slice(1)}Button`);
-        muteButton.innerHTML = muteState[soundType] ? `Unmute ${soundType.charAt(0).toUpperCase() + soundType.slice(1)}` : `Mute ${soundType.charAt(0).toUpperCase() + soundType.slice(1)}`;
+    function updatePixelIncreaseDisplay() {
+        var pixelIncreaseDisplay = document.getElementById("pixelIncreaseDisplay");
+        pixelIncreaseDisplay.innerHTML = "Pixel Increase: " + pixelIncrease + "px";
     }
+
+    function buyPixelIncrease() {
+        if (clicksToSpend > 0) {
+            pixelIncrease += 5;
+            clicksToSpend--;
+            updatePixelIncreaseDisplay();
+            updateClicksToSpend();
+        }
+    }
+
+    function updateClicksToSpend() {
+        var clicksToSpendElement = document.getElementById("clicksToSpend");
+        clicksToSpendElement.innerHTML = clicksToSpend;
+    }
+
+    setInterval(function () {
+        // Allow the player to spend 10 clicks for every 100 clicks earned
+        clicksToSpend += Math.floor(totalClicks / 100) * 10;
+        totalClicks = 0;
+        updateClicksToSpend();
+    }, 1000);
 </script>
 </body>
 </html>
