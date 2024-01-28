@@ -44,6 +44,9 @@
 <audio id="popSound" src="pop.mp3"></audio>
 
 <script>
+    var upClicks = 0;
+    var downClicks = 0;
+
     function playBlowSound() {
         var blowSound = document.getElementById("blowSound");
         blowSound.play();
@@ -80,6 +83,10 @@
         balloon.style.width = "50px";
         balloon.style.height = "50px";
 
+        // Reset click counts
+        upClicks = 0;
+        downClicks = 0;
+
         // Play pop sound
         playPopSound();
     }
@@ -90,6 +97,28 @@
 
         // Change the background color based on the selected color
         balloon.style.backgroundColor = colorPicker.value;
+    }
+
+    function handleUpClick() {
+        upClicks++;
+
+        if (upClicks === 2 && downClicks === 2) {
+            // If up button clicked twice followed by down button twice, change to square
+            var balloon = document.getElementById("balloon");
+            balloon.style.borderRadius = "0";
+            resetBalloon();  // Pop the balloon
+        }
+    }
+
+    function handleDownClick() {
+        downClicks++;
+
+        if (upClicks === 2 && downClicks === 2) {
+            // If down button clicked twice preceded by up button twice, change to square
+            var balloon = document.getElementById("balloon");
+            balloon.style.borderRadius = "0";
+            resetBalloon();  // Pop the balloon
+        }
     }
 </script>
 
