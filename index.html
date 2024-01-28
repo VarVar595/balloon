@@ -63,7 +63,7 @@
         }
         #storeInfo {
             position: fixed;
-            top: 50px;
+            top: 40px;
             right: 10px;
         }
         #muteBlowButton {
@@ -76,16 +76,16 @@
         }
         #mutePopButton {
             position: fixed;
-            top: 50px;
-            left: 10px;
+            top: 10px;
+            right: 10px;
             padding: 10px;
             background-color: #ccc;
             cursor: pointer;
         }
         #decreasePixelButton {
             position: fixed;
-            top: 100px;
-            right: 10px;
+            bottom: 10px;
+            left: 10px;
             padding: 10px;
             background-color: #ccc;
             cursor: pointer;
@@ -194,6 +194,22 @@
         // Increment click counter
         clickCounter++;
         totalClicks++;
+
+        // Increment pop counter
+        popCounter++;
+        updatePopCounter();
+    }
+
+    function changeBalloonColor() {
+        var balloon = document.getElementById("balloon");
+        var colorPicker = document.getElementById("colorPicker");
+
+        // Change the background color based on the selected color
+        balloon.style.backgroundColor = colorPicker.value;
+
+        // Increment click counter
+        clickCounter++;
+        totalClicks++;
         updateClickCounter();
     }
 
@@ -222,8 +238,10 @@
     }
 
     function decreasePixelIncrease() {
-        // Decrease the pixel increase by 5
-        pixelIncrease = Math.max(5, pixelIncrease - 5);
+        pixelIncrease -= 5;
+        if (pixelIncrease < 0) {
+            pixelIncrease = 0;
+        }
         updatePixelIncreaseDisplay();
     }
 
@@ -232,18 +250,9 @@
         clicksToSpendElement.innerHTML = clicksToSpend;
     }
 
-    function toggleMute(soundType) {
-        muteState[soundType] = !muteState[soundType];
-        var muteButton = document.getElementById(`mute${soundType.charAt(0).toUpperCase() + soundType.slice(1)}Button`);
-        muteButton.innerHTML = muteState[soundType] ? `Unmute ${soundType.charAt(0).toUpperCase() + soundType.slice(1)}` : `Mute ${soundType.charAt(0).toUpperCase() + soundType.slice(1)}`;
+    function toggleMute(sound) {
+        muteState[sound] = !muteState[sound];
     }
-
-    setInterval(function () {
-        // Earn one click to spend every 50 clicks
-        clicksToSpend += Math.floor(totalClicks / 50);
-        clickCounter %= 50;
-        updateClicksToSpend();
-    }, 1000);
 </script>
 </body>
 </html>
