@@ -16,7 +16,6 @@
             transform: translate(-50%, -50%);
             transition: all 0.3s ease-in-out;
         }
-
         #resetButton {
             position: fixed;
             bottom: 10px;
@@ -25,139 +24,92 @@
             background-color: #ccc;
             cursor: pointer;
         }
-
-        #muteBlowButton,
-        #mutePopButton {
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            padding: 10px;
-            background-color: #ccc;
-            cursor: pointer;
-        }
-
         #colorPicker {
             position: fixed;
             bottom: 10px;
             left: 10px;
             padding: 10px;
         }
-
         #clickCounter {
             position: fixed;
             bottom: 50px;
             left: 10px;
         }
+        #popCounter {
+            position: fixed;
+            bottom: 70px;
+            left: 10px;
+        }
     </style>
 </head>
 <body>
-
 <div id="balloon" onclick="resizeBalloon()"></div>
 <div id="resetButton" onclick="resetBalloon()">Pop</div>
-<div id="muteBlowButton" onclick="toggleMute('blow')">Mute Blow</div>
-<div id="mutePopButton" onclick="toggleMute('pop')">Mute Pop</div>
 <input type="color" id="colorPicker" onchange="changeBalloonColor()" value="#00ff00">
 <div id="clickCounter">Clicks: 0</div>
-
+<div id="popCounter">Balloons Popped: 0</div>
 <audio id="blowSound" src="blow.mp3"></audio>
 <audio id="popSound" src="pop.mp3"></audio>
-<audio id="yippeeSound" src="yippee.mp3"></audio>
-<audio id="vineSound" src="vine.mp3"></audio>
-
 <script>
     var clickCounter = 0;
-    var muteState = {
-        blow: false,
-        pop: false
-    };
-
+    var popCounter = 0;
     function playBlowSound() {
         var blowSound = document.getElementById("blowSound");
-        if (!muteState.blow) {
-            blowSound.play();
-        }
+        blowSound.play();
     }
-
     function playPopSound() {
         var popSound = document.getElementById("popSound");
-        if (!muteState.pop) {
-            popSound.play();
-        }
+        popSound.play();
     }
-
-    function playYippeeSound() {
-        var yippeeSound = document.getElementById("yippeeSound");
-        yippeeSound.play();
-    }
-
-    function playVineSound() {
-        var vineSound = document.getElementById("vineSound");
-        vineSound.play();
-    }
-
     function resizeBalloon() {
         var balloon = document.getElementById("balloon");
-
         // Get the current width and height
         var currentWidth = balloon.offsetWidth;
         var currentHeight = balloon.offsetHeight;
-
         // Increase the width and height by a factor (e.g., 20 pixels)
         var newWidth = currentWidth + 15;
         var newHeight = currentHeight + 15;
-
         // Apply the new width and height
         balloon.style.width = newWidth + "px";
         balloon.style.height = newHeight + "px";
-
         // Play blowing sound
         playBlowSound();
-
         // Increment click counter
         clickCounter++;
         updateClickCounter();
+        if (newWidth >= 800 && newHeight >= 800) {
+            resetBalloon();
+        }
     }
-
     function resetBalloon() {
         var balloon = document.getElementById("balloon");
 
         // Randomly choose between "pop", "yippee", and "vine" sound effects
-        var randomSound = Math.random() < 0.33 ? playPopSound() :
-                          Math.random() < 0.66 ? playYippeeSound() :
-                                                 playVineSound();
+        playBlowSound();
+        playPopSound();
 
         // Reset the balloon to its original size
         balloon.style.width = "50px";
         balloon.style.height = "50px";
-
+        popCounter++;
+        updatePopCounter();
         // Increment click counter
-        clickCounter++;
-        updateClickCounter();
     }
-
     function changeBalloonColor() {
         var balloon = document.getElementById("balloon");
         var colorPicker = document.getElementById("colorPicker");
-
         // Change the background color based on the selected color
         balloon.style.backgroundColor = colorPicker.value;
-
         // Increment click counter
-        clickCounter++;
-        updateClickCounter();
     }
-
     function updateClickCounter() {
         var clickCounterElement = document.getElementById("clickCounter");
         clickCounterElement.innerHTML = "Clicks: " + clickCounter;
     }
-
-    function toggleMute(soundType) {
-        muteState[soundType] = !muteState[soundType];
-        var muteButton = document.getElementById(`mute${soundType.charAt(0).toUpperCase() + soundType.slice(1)}Button`);
-        muteButton.innerHTML = muteState[soundType] ? `Unmute ${soundType.charAt(0).toUpperCase() + soundType.slice(1)}` : `Mute ${soundType.charAt(0).toUpperCase() + soundType.slice(1)}`;
+    function updatePopCounter() {
+        var popCounterElement = document.getElementById("popCounter");
+        popCounterElement.innerHTML = "Balloons Popped: " + popCounter;
     }
 </script>
-
 </body>
 </html>
